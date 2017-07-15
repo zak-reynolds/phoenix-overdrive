@@ -9,16 +9,13 @@ namespace Assets.Scripts.Models
     {
         private float _throttle;
         private float _steering;
-        private float _pitchWobble;
         public float Throttle { get { return _throttle; } }
         public float Steering { get { return _steering; } }
-        public float PitchWobble { get { return _pitchWobble; } }
 
-        public VehicleInput(float throttle, float steering, float pitchWobble)
+        public VehicleInput(float throttle, float steering)
         {
             _throttle = throttle;
             _steering = steering;
-            _pitchWobble = pitchWobble;
         }
     }
 }

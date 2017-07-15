@@ -13,6 +13,7 @@ public class Vehicle : MonoBehaviour {
     private Vector3 velocity = Vector3.zero;
     private Quaternion targetRotation = Quaternion.identity;
     private Vector3 targetPosition = Vector3.zero;
+    private float impulse = 0;
 
     [SerializeField]
     private float topSpeed;
@@ -28,6 +29,11 @@ public class Vehicle : MonoBehaviour {
         this.input = input;
     }
 
+    public void AddImpulse(float amount)
+    {
+        impulse = amount;
+    }
+
     void Update()
     {
         var rotationSpeedScaled = rotationSpeed * Time.deltaTime;
@@ -36,8 +42,7 @@ public class Vehicle : MonoBehaviour {
         targetRotation =
             Quaternion.AngleAxis(
                 (transform.rotation.eulerAngles.y + rotationSpeedScaled * input.Steering) % 360,
-                Vector3.up) *
-            pitchWobbleFunc(input.PitchWobble, 16);
+                Vector3.up);
 
         velocity = transform.forward *
             topSpeedScaled * input.Throttle;
@@ -46,15 +51,11 @@ public class Vehicle : MonoBehaviour {
 
 	void FixedUpdate () {
         rb.MoveRotation(targetRotation);
-        rb.AddForce(transform.forward * velocity.magnitude);
+        rb.AddForce(transform.forward * velocity.magnitude * 30);
+        if (impulse > 0)
+        {
+            rb.AddRelativeForce(Vector3.forward * impulse, ForceMode.Impulse);
+            impulse = 0;
+        }
 	}
-
-    private Quaternion pitchWobbleFunc(float amount, float rate)
-    {
-        if (Mathf.Approximately(amount, 0))
-            return Quaternion.identity;
-        return Quaternion.AngleAxis(
-            amount * (Mathf.Sin(rate * Time.time) / 2 + 0.5f) - amount / 2,
-            Vector3.left);
-    }
 }

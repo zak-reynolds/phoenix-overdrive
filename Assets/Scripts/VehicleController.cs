@@ -7,12 +7,19 @@ using UnityEngine;
 public class VehicleController : MonoBehaviour {
     private Vehicle vehicle;
 
+    [SerializeField]
+    private Facade vehicleFacade;
+    [SerializeField]
+    private VehicleCamRig camRig;
+
     private float wobbleIntensity = 0;
     private float throttle = 0;
     private float steeringBoostIntensity = 0;
 
     [SerializeField]
     private float throttleDecay = 0.5f;
+    [SerializeField]
+    private float throttleImpulse = 10f;
 
     [SerializeField]
     private float steeringBoost = 1.5f;
@@ -29,8 +36,14 @@ public class VehicleController : MonoBehaviour {
         {
             wobbleIntensity = 10;
             steeringBoostIntensity = steeringBoost;
+            camRig.SetFOV(75);
+            vehicle.AddImpulse(throttleImpulse);
         }
-        if (Input.GetButtonUp("Gas")) wobbleIntensity = 16;
+        if (Input.GetButtonUp("Gas"))
+        {
+            wobbleIntensity = 16;
+            camRig.SetFOV(65);
+        }
         wobbleIntensity = Mathf.Max(wobbleIntensity - Time.deltaTime * 30, 0);
         steeringBoostIntensity = Mathf.Max(steeringBoostIntensity - Time.deltaTime / steeringBoostDecay, 0);
 
@@ -45,9 +58,18 @@ public class VehicleController : MonoBehaviour {
 
         var input = new VehicleInput(
             throttle,
-            Input.GetAxis("Horizontal") * (1 + steeringBoostIntensity),
-            wobbleIntensity
-            );
+            Input.GetAxis("Horizontal") * (1 + steeringBoostIntensity));
         vehicle.SetInput(input);
-	}
+
+        if (vehicleFacade) vehicleFacade.SetRotationOffset(pitchWobbleFunc(wobbleIntensity, 16));
+    }
+
+    private Quaternion pitchWobbleFunc(float amount, float rate)
+    {
+        if (Mathf.Approximately(amount, 0))
+            return Quaternion.identity;
+        return Quaternion.AngleAxis(
+            amount * (Mathf.Sin(rate * Time.time) / 2 + 0.5f) - amount / 2,
+            Vector3.left);
+    }
 }
