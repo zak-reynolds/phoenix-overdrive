@@ -37,12 +37,14 @@ public class VehicleController : MonoBehaviour {
             wobbleIntensity = 10;
             steeringBoostIntensity = steeringBoost;
             camRig.SetFOV(75);
+            camRig.ActivateZoomBoom();
             vehicle.AddImpulse(throttleImpulse);
         }
         if (Input.GetButtonUp("Gas"))
         {
             wobbleIntensity = 16;
             camRig.SetFOV(65);
+            camRig.DeactivateZoomBoom();
         }
         wobbleIntensity = Mathf.Max(wobbleIntensity - Time.deltaTime * 30, 0);
         steeringBoostIntensity = Mathf.Max(steeringBoostIntensity - Time.deltaTime / steeringBoostDecay, 0);

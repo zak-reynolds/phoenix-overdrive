@@ -19,6 +19,12 @@ public class Vehicle : MonoBehaviour {
     private float topSpeed;
     [SerializeField]
     private float rotationSpeed;
+
+    [SerializeField]
+    private Light[] headlamps;
+    [SerializeField]
+    private float headlampMaxIntensity = 3.75f;
+    private float targetHeadlampIntensity = 3.75f;
     
 	void Start () {
         rb = GetComponent<Rigidbody>();
@@ -47,6 +53,12 @@ public class Vehicle : MonoBehaviour {
         velocity = transform.forward *
             topSpeedScaled * input.Throttle;
         targetPosition += velocity;
+
+        targetHeadlampIntensity = input.Throttle > 0.85f ? headlampMaxIntensity : 0;
+        foreach (Light l in headlamps) 
+        {
+            l.intensity = Mathf.Lerp(l.intensity, targetHeadlampIntensity, Time.deltaTime * 25);
+        }
     }
 
 	void FixedUpdate () {

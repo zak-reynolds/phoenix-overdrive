@@ -8,9 +8,12 @@ public class VehicleCamRig : MonoBehaviour {
     [SerializeField]
     private Vector3 boom;
     [SerializeField]
+    private Vector3 zoomBoom;
+    [SerializeField]
     private Transform target;
 
     private Camera camera;
+    private Vector3 engagedBoom;
 
     [SerializeField]
     private float tilt = 35f;
@@ -22,6 +25,7 @@ public class VehicleCamRig : MonoBehaviour {
 
     void Start ()
     {
+        engagedBoom = boom;
         camera = GetComponent<Camera>();
     }
     
@@ -30,9 +34,19 @@ public class VehicleCamRig : MonoBehaviour {
         targetFov = value;
     }
 
+    public void ActivateZoomBoom()
+    {
+        engagedBoom = zoomBoom;
+    }
+
+    public void DeactivateZoomBoom()
+    {
+        engagedBoom = boom;
+    }
+
     void FixedUpdate()
     {
-        targetPosition = target.position + Quaternion.Euler(0, target.rotation.eulerAngles.y, 0) * boom;
+        targetPosition = target.position + Quaternion.Euler(0, target.rotation.eulerAngles.y, 0) * engagedBoom;
     }
 
 	void LateUpdate () {
