@@ -21,10 +21,10 @@ namespace Assets.Scripts.EnemyStates
         
         public override EnemyState ProcessState()
         {
-            var targetDirection = (target.position - self.position).normalized;
+            var targetDirection = (target.position + target.right * 2.5f - self.position).normalized;
             Input = new VehicleInput(
-                1,
-                Vector3.Dot(self.right, targetDirection) > 0 ? 1 : -1);
+                0.8f,
+                Vector3.Dot(self.right, targetDirection) > 0 ? 0.8f : -0.8f);
 
             return null;
         }
