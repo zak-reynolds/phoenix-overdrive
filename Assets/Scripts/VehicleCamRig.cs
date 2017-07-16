@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -49,7 +50,7 @@ public class VehicleCamRig : MonoBehaviour {
         targetPosition = target.position + Quaternion.Euler(0, target.rotation.eulerAngles.y, 0) * engagedBoom;
     }
 
-	void LateUpdate () {
+	protected void LateUpdate () {
         transform.position = Vector3.Lerp(
             transform.position,
             targetPosition,
@@ -58,4 +59,10 @@ public class VehicleCamRig : MonoBehaviour {
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFov, Time.deltaTime * fovDampening);
 	}
+
+    internal void ResetTarget(Transform transform)
+    {
+        target = transform;
+        engagedBoom = boom;
+    }
 }

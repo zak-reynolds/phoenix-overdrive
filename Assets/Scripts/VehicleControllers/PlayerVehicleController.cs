@@ -58,5 +58,15 @@ namespace Assets.Scripts.VehicleControllers
 
             base.Update();
         }
+
+        protected override void LateUpdate()
+        {
+            if (vehicle.IsDoomed())
+            {
+                var deathGob = Instantiate(deathPrefab, transform.position, transform.rotation);
+                camRig.ResetTarget(deathGob.transform);
+                Destroy(vehicle.gameObject);
+            }
+        }
     }
 }

@@ -27,7 +27,11 @@ public class Facade : MonoBehaviour
 
     void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, target.transform.position, Time.deltaTime * translationDamping);
-        transform.rotation = Quaternion.Slerp(transform.rotation, target.rotation, Time.deltaTime * rotationDamping) * rotationOffset;
+        if (target == null) Destroy(gameObject);
+        else
+        {
+            transform.position = Vector3.Lerp(transform.position, target.transform.position, Time.deltaTime * translationDamping);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target.rotation, Time.deltaTime * rotationDamping) * rotationOffset;
+        }
     }
 }

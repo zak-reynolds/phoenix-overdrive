@@ -21,6 +21,12 @@ namespace Assets.Scripts.EnemyStates
         
         public override EnemyState ProcessState()
         {
+            if (target == null)
+            {
+                Input = new VehicleInput(0, 0);
+                return null;
+            }
+
             var targetDirection = (target.position + target.right * 2.5f - self.position).normalized;
             Input = new VehicleInput(
                 0.8f,

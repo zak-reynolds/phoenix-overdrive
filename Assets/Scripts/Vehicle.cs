@@ -60,7 +60,6 @@ public class Vehicle : MonoBehaviour {
         if (other.tag.Equals("Parts"))
         {
             hp++;
-            Debug.LogFormat("HP: {0}", hp);
         }
     }
 
@@ -77,10 +76,6 @@ public class Vehicle : MonoBehaviour {
     protected virtual void DamageTaken()
     {
         hp--;
-        if (hp <= 0)
-        {
-            Debug.Log("Dead.");
-        }
     }
 
     void Update()
@@ -116,4 +111,9 @@ public class Vehicle : MonoBehaviour {
         }
         rb.drag = drag + hpDrag * hp;
 	}
+
+    public bool IsDoomed()
+    {
+        return hp < 0;
+    }
 }

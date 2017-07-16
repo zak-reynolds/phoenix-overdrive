@@ -10,6 +10,8 @@ public class VehicleController : MonoBehaviour {
     [Header("Component Links")]
     [SerializeField]
     protected Facade vehicleFacade;
+    [SerializeField]
+    protected GameObject deathPrefab;
 
     [Header("Wobble")]
     [SerializeField]
@@ -29,6 +31,15 @@ public class VehicleController : MonoBehaviour {
 	protected virtual void Update () {
         wobbleIntensity = Mathf.Max(wobbleIntensity - Time.deltaTime * 30, 0);
         if (vehicleFacade) vehicleFacade.SetRotationOffset(pitchWobbleFunc(wobbleIntensity, 16));
+    }
+
+    protected virtual void LateUpdate()
+    {
+        if (vehicle.IsDoomed())
+        {
+            Instantiate(deathPrefab, transform.position, transform.rotation);
+            Destroy(vehicle.gameObject);
+        }
     }
 
     private Quaternion pitchWobbleFunc(float amount, float rate)

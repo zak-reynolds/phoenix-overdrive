@@ -873,7 +873,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1.0537453, z: 4.7176347}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 18.37, y: 0, z: 0}
 --- !u!114 &182272717
 MonoBehaviour:
@@ -8616,7 +8616,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &570826183
 GameObject:
@@ -9026,7 +9026,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &636787776
 Transform:
   m_ObjectHideFlags: 0
@@ -9152,7 +9152,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1550193739
+  randomSeed: 1822834696
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -12434,7 +12434,7 @@ Transform:
   - {fileID: 778808311}
   - {fileID: 101496899}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &661727627
 GameObject:
@@ -12605,7 +12605,7 @@ Transform:
   - {fileID: 2045500581}
   - {fileID: 2007775857}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &684450737
 GameObject:
@@ -12758,6 +12758,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vehicleFacade: {fileID: 386534013}
+  deathPrefab: {fileID: 1554039558730046, guid: 2731aa994fadf4e408df265fcd3611b6,
+    type: 2}
   gasOnWobble: 10
   gasOffWobble: 16
 --- !u!64 &695273945
@@ -12806,9 +12808,7 @@ MonoBehaviour:
   hpDrag: 0.75
   damageImpulseFloor: 80
   damageDebounce: 0.5
-  headlamps:
-  - {fileID: 1949424266}
-  - {fileID: 2142892786}
+  headlamps: []
   headlampMaxIntensity: 3.75
 --- !u!4 &695273948
 Transform:
@@ -12822,7 +12822,7 @@ Transform:
   m_Children:
   - {fileID: 386534016}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 162.24901, z: 0}
 --- !u!1 &698930504
 GameObject:
@@ -12840,7 +12840,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &698930505
 Transform:
   m_ObjectHideFlags: 0
@@ -12966,7 +12966,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1136355588
+  randomSeed: 1005044371
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -16398,7 +16398,7 @@ GameObject:
   - component: {fileID: 742759901}
   - component: {fileID: 742759900}
   m_Layer: 8
-  m_Name: Death
+  m_Name: Heat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23944,7 +23944,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1033071940
 Transform:
   m_ObjectHideFlags: 0
@@ -24070,7 +24070,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 130190929
+  randomSeed: 1049441140
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -29515,7 +29515,7 @@ Transform:
   - {fileID: 225945547}
   - {fileID: 1469163309}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1469163308
 GameObject:
@@ -29633,6 +29633,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vehicleFacade: {fileID: 1780440767}
+  deathPrefab: {fileID: 1554039558730046, guid: 2731aa994fadf4e408df265fcd3611b6,
+    type: 2}
   gasOnWobble: 10
   gasOffWobble: 16
   camRig: {fileID: 182272717}
@@ -29654,7 +29656,7 @@ Transform:
   - {fileID: 2004025659}
   - {fileID: 1341256042}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1549918904
 Rigidbody:
@@ -34187,6 +34189,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vehicleFacade: {fileID: 784472800}
+  deathPrefab: {fileID: 1554039558730046, guid: 2731aa994fadf4e408df265fcd3611b6,
+    type: 2}
   gasOnWobble: 10
   gasOffWobble: 16
 --- !u!114 &1901431549
@@ -34206,9 +34210,7 @@ MonoBehaviour:
   hpDrag: 0.75
   damageImpulseFloor: 80
   damageDebounce: 0.5
-  headlamps:
-  - {fileID: 1949424266}
-  - {fileID: 2142892786}
+  headlamps: []
   headlampMaxIntensity: 3.75
 --- !u!4 &1901431550
 Transform:
@@ -34654,6 +34656,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vehicleFacade: {fileID: 1444765178}
+  deathPrefab: {fileID: 1554039558730046, guid: 2731aa994fadf4e408df265fcd3611b6,
+    type: 2}
   gasOnWobble: 10
   gasOffWobble: 16
 --- !u!64 &1996437556
@@ -34702,9 +34706,7 @@ MonoBehaviour:
   hpDrag: 0.75
   damageImpulseFloor: 80
   damageDebounce: 0.5
-  headlamps:
-  - {fileID: 1949424266}
-  - {fileID: 2142892786}
+  headlamps: []
   headlampMaxIntensity: 3.75
 --- !u!4 &1996437559
 Transform:
@@ -34718,7 +34720,7 @@ Transform:
   m_Children:
   - {fileID: 1444765181}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 162.24901, z: 0}
 --- !u!1 &2004025655
 GameObject:
@@ -35169,7 +35171,7 @@ Transform:
   - {fileID: 43612963}
   - {fileID: 93961217}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2136548766
 GameObject:
@@ -35202,6 +35204,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vehicleFacade: {fileID: 1390443527}
+  deathPrefab: {fileID: 1554039558730046, guid: 2731aa994fadf4e408df265fcd3611b6,
+    type: 2}
   gasOnWobble: 10
   gasOffWobble: 16
 --- !u!64 &2136548768
@@ -35250,9 +35254,7 @@ MonoBehaviour:
   hpDrag: 0.75
   damageImpulseFloor: 80
   damageDebounce: 0.5
-  headlamps:
-  - {fileID: 1949424266}
-  - {fileID: 2142892786}
+  headlamps: []
   headlampMaxIntensity: 3.75
 --- !u!4 &2136548771
 Transform:
@@ -35266,7 +35268,7 @@ Transform:
   m_Children:
   - {fileID: 1390443530}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 162.24901, z: 0}
 --- !u!1 &2142892784
 GameObject:
