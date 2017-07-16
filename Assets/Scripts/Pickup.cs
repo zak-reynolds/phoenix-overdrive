@@ -8,11 +8,11 @@ public class Pickup : MonoBehaviour {
     {
         if (other.tag.Equals("Player"))
         {
-            OnPickup();
+            OnPickup(other.GetComponent<Vehicle>());
         }
     }
 
-    protected virtual void OnPickup()
+    protected virtual void OnPickup(Vehicle vehicle)
     {
         Destroy(gameObject);
     }

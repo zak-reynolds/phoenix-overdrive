@@ -15,6 +15,7 @@ public class Road : MonoBehaviour {
 
 	void Start () {
         GenerateMesh();
+        //GenerateCollider();
         var meshRenderer = gameObject.AddComponent<MeshRenderer>();
         meshRenderer.material = material;
 	}
@@ -50,7 +51,8 @@ public class Road : MonoBehaviour {
                 new Vector2(25, 0.7f),
                 new Vector2(45, 0.5f),
                 new Vector2(45, 0.5f),
-                new Vector2(50, 0)
+                new Vector2(50, 0),
+                new Vector2(0, 0)
             };
 
         var points = new Point[roadPoints.Count];
@@ -82,7 +84,8 @@ public class Road : MonoBehaviour {
                     Vector2.up,
                     Vector2.up,
                     Vector2.up,
-                    Vector2.up
+                    Vector2.up,
+                    Vector2.down
                 },
                 lines = new int[]
                 {
@@ -91,14 +94,31 @@ public class Road : MonoBehaviour {
                     2, 3,
                     3, 4,
                     4, 5,
-                    5, 6
+                    5, 6,
+                    6, 7,
+                    7, 0
+
                 },
                 uValues = new float[]
                 {
-                    0, 0.1f, 0.1f, 0.5f, 0.9f, 0.9f, 1
+                    0, 0.1f, 0.1f, 0.5f, 0.9f, 0.9f, 1, 0
                 }
             },
             points
             );
+    }
+
+    private void GenerateCollider()
+    {
+        var gob = new GameObject();
+        gob.transform.position = transform.position + Vector3.up * 2f;
+        gob.transform.rotation = transform.rotation;
+        gob.layer = 12;
+        gob.tag = "Road";
+        gob.name = "RoadCollider";
+        var mc = gob.AddComponent<MeshCollider>();
+        mc.sharedMesh = GetComponent<MeshFilter>().sharedMesh;
+        mc.convex = true;
+        mc.isTrigger = true;
     }
 }

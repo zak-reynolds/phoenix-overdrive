@@ -20,6 +20,12 @@ namespace Assets
                 newSegment.transform.position += newSegment.transform.forward * 50;
                 newSegment.transform.parent = road.transform.parent;
                 newSegment.name = "RoadSegment";
+                newSegment.tag = "Road";
+                newSegment.layer = 12;
+                //var bc = newSegment.AddComponent<BoxCollider>();
+                //bc.isTrigger = true;
+                //bc.center = new Vector3(25, 0, 0);
+                //bc.size = new Vector3(50, 5, 55);
                 RoadEditor.RefreshRoadPoints(newSegment.transform.parent.GetComponent<Road>());
                 Selection.activeGameObject = newSegment;
             }

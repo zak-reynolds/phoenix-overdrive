@@ -26,6 +26,7 @@ public class VehicleController : MonoBehaviour {
     protected virtual void Start()
     {
         vehicle = GetComponent<Vehicle>();
+
     }
 
 	protected virtual void Update () {

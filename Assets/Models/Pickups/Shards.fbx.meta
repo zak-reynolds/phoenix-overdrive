@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 6fa6dab3a60ffea498232814c0e1f0b7
-timeCreated: 1500153919
+guid: 7dc7bdf0b5b2f904ea732c0051684fd4
+timeCreated: 1500183583
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
@@ -9,8 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Plate.002
-    4300002: Shards
+    4300000: Shards
   materials:
     importMaterials: 1
     materialName: 0
@@ -61,7 +60,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2

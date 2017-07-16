@@ -10,7 +10,7 @@ public class Facade : MonoBehaviour
     [SerializeField]
     private float rotationDamping = 10;
 
-    private Transform target;
+    protected Transform target;
     private Quaternion rotationOffset = Quaternion.identity;
 
     public void SetRotationOffset(Quaternion offset)
@@ -18,14 +18,14 @@ public class Facade : MonoBehaviour
         rotationOffset = offset;
     }
 
-    void Start()
+    protected virtual void Start()
     {
         Debug.Assert(transform.parent != null, "Facade must have a parent");
         target = transform.parent;
         transform.parent = transform.parent.parent;
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (target == null) Destroy(gameObject);
         else

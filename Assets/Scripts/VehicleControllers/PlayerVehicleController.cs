@@ -24,10 +24,26 @@ namespace Assets.Scripts.VehicleControllers
         [SerializeField]
         private float steeringBoostDecay = 0.5f;
 
+        [Header("Pheonix")]
+        [SerializeField]
+        private float pheonixSpeedBoost = 1.5f;
+        private float effectivePheonixBoost = 1;
+        [SerializeField]
+        private float pheonixTime = 3f;
+        private float pheonixTimer = 0;
+        [SerializeField]
+        private int pheonixGear = 5;
+        private int gear = 0;
+        [SerializeField]
+        private float pheonixWindow = 0.5f;
+        private float pheonixWindowTimer = 0;
+
         protected override void Update()
         {
             if (Input.GetButtonDown("Gas"))
             {
+                TryToGearUp();
+
                 wobbleIntensity = gasOnWobble;
                 steeringBoostIntensity = steeringBoost;
                 camRig.SetFOV(75);
@@ -51,9 +67,15 @@ namespace Assets.Scripts.VehicleControllers
                 throttle = Mathf.Max(throttle - Time.deltaTime / throttleDecay, 0);
             }
 
+            if (pheonixTimer == 0 && pheonixWindowTimer == 0) gear = 0;
+            pheonixWindowTimer = Mathf.Max(pheonixWindowTimer - Time.deltaTime, 0);
+            pheonixTimer = Mathf.Max(pheonixTimer - Time.deltaTime, 0);
+            effectivePheonixBoost = pheonixTimer > 0 ? pheonixSpeedBoost : 1;
+
             var input = new VehicleInput(
-                throttle,
-                Input.GetAxis("Horizontal") * (1 + steeringBoostIntensity));
+                throttle * effectivePheonixBoost,
+                Input.GetAxis("Horizontal") * (1 + steeringBoostIntensity),
+                pheonixTimer > 0);
             vehicle.SetInput(input);
 
             base.Update();
@@ -67,6 +89,46 @@ namespace Assets.Scripts.VehicleControllers
                 camRig.ResetTarget(deathGob.transform);
                 Destroy(vehicle.gameObject);
             }
+        }
+
+        public int GetGear()
+        {
+            return gear;
+        }
+
+        private bool TryToGearUp()
+        {
+            if (pheonixTimer == 0 && vehicle.GetHP() > 0)
+            {
+                if (pheonixWindowTimer == 0)
+                {
+                    pheonixWindowTimer = pheonixWindow;
+                    gear = 1;
+                }
+                else
+                {
+                    gear++;
+                    pheonixWindowTimer = pheonixWindow;
+                    if (gear >= pheonixGear)
+                    {
+                        vehicle.DecrementHP();
+                        pheonixTimer = pheonixTime;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public float GetPheonixPercentage()
+        {
+            return pheonixTimer / pheonixTime;
+        }
+
+        public float GetGearingPercentage()
+        {
+            if (gear <= 1) return 0;
+            return (float)(gear -1) / (pheonixGear - 1);
         }
     }
 }

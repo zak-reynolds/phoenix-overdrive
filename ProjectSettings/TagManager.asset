@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Parts
   - Enemy
+  - Key
+  - Lock
+  - Pheonix
+  - Road
   layers:
   - Default
   - TransparentFX
@@ -19,7 +23,7 @@ TagManager:
   - Obstacles
   - Pickups
   - Enemies
-  - 
+  - Road
   - 
   - 
   - 

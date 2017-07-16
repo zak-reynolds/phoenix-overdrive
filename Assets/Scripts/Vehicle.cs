@@ -25,12 +25,19 @@ public class Vehicle : MonoBehaviour {
     [SerializeField]
     private float hpDrag = 0.75f;
 
+    [Header("Pheonix")]
+    private bool isPheonix = false;
+
     [Header("Damage")]
     [SerializeField]
     private float damageImpulseFloor = 80;
     [SerializeField]
     private float damageDebounce = 0.5f;
     private float damageDebounceTimer = 0;
+    [SerializeField]
+    private float outOfBoundsCooldown = 1;
+    private float outOfBoundsTimer = 1;
+    private bool inBounds = true;
 
     [Header("Visual")]
     [SerializeField]
@@ -40,6 +47,7 @@ public class Vehicle : MonoBehaviour {
     private float targetHeadlampIntensity = 3.75f;
 
     private int hp = 0;
+    private bool carryingKey = false;
     
 	void Start () {
         rb = GetComponent<Rigidbody>();
@@ -59,7 +67,46 @@ public class Vehicle : MonoBehaviour {
     {
         if (other.tag.Equals("Parts"))
         {
-            hp++;
+            if (hp <= 5) hp++;
+        }
+        if (other.tag.Equals("Key") &&
+            tag.Equals("Player"))
+        {
+            carryingKey = true;
+        }
+        if (other.tag.Equals("Lock") &&
+            carryingKey)
+        {
+            Debug.Log("WINNER");
+        }
+        if (other.tag.Equals("Road"))
+        {
+            outOfBoundsTimer = outOfBoundsCooldown;
+            inBounds = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag.Equals("Road"))
+        {
+            outOfBoundsTimer = outOfBoundsCooldown;
+            inBounds = false;
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+
+        if (other.tag.Equals("Pheonix") &&
+            !tag.Equals("Player"))
+        {
+            hp--;
+        }
+        if (other.tag.Equals("Road"))
+        {
+            outOfBoundsTimer = outOfBoundsCooldown;
+            inBounds = true;
         }
     }
 
@@ -99,6 +146,14 @@ public class Vehicle : MonoBehaviour {
         }
 
         damageDebounceTimer = Mathf.Max(damageDebounceTimer - Time.deltaTime, 0);
+        outOfBoundsTimer -= Time.deltaTime;
+        if (!inBounds && outOfBoundsTimer < 0)
+        {
+            outOfBoundsTimer = outOfBoundsCooldown;
+            hp--;
+        }
+
+        isPheonix = input.IsPheonix;
     }
 
 	void FixedUpdate () {
@@ -115,5 +170,28 @@ public class Vehicle : MonoBehaviour {
     public bool IsDoomed()
     {
         return hp < 0;
+    }
+
+    public bool IsCarryingKey()
+    {
+        return carryingKey;
+    }
+
+    public bool IsPheonix()
+    {
+        return isPheonix;
+    }
+
+    public int GetHP()
+    {
+        return hp;
+    }
+    public int DecrementHP()
+    {
+        return --hp;
+    }
+    public bool InBounds()
+    {
+        return inBounds;
     }
 }
