@@ -12,7 +12,7 @@ public class VehicleCamRig : MonoBehaviour {
     [SerializeField]
     private Transform target;
 
-    private Camera camera;
+    private Camera cam;
     private Vector3 engagedBoom;
 
     [SerializeField]
@@ -26,7 +26,7 @@ public class VehicleCamRig : MonoBehaviour {
     void Start ()
     {
         engagedBoom = boom;
-        camera = GetComponent<Camera>();
+        cam = GetComponent<Camera>();
     }
     
     public void SetFOV(float value)
@@ -56,6 +56,6 @@ public class VehicleCamRig : MonoBehaviour {
             Time.deltaTime * 5f);
         transform.rotation = Quaternion.Euler(tilt, target.rotation.eulerAngles.y, 0);
 
-        camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, targetFov, Time.deltaTime * fovDampening);
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFov, Time.deltaTime * fovDampening);
 	}
 }

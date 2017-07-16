@@ -6,25 +6,40 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Vehicle : MonoBehaviour {
 
-    private Rigidbody rb;
+    private Rigidbody rb = null;
 
-    private VehicleInput input;
+    private VehicleInput input = new VehicleInput();
 
     private Vector3 velocity = Vector3.zero;
     private Quaternion targetRotation = Quaternion.identity;
     private Vector3 targetPosition = Vector3.zero;
     private float impulse = 0;
 
+    [Header("Performance")]
     [SerializeField]
-    private float topSpeed;
+    private float topSpeed = 2300;
     [SerializeField]
-    private float rotationSpeed;
+    private float rotationSpeed = 180;
+    [SerializeField]
+    private float drag = 10;
+    [SerializeField]
+    private float hpDrag = 0.75f;
 
+    [Header("Damage")]
+    [SerializeField]
+    private float damageImpulseFloor = 80;
+    [SerializeField]
+    private float damageDebounce = 0.5f;
+    private float damageDebounceTimer = 0;
+
+    [Header("Visual")]
     [SerializeField]
     private Light[] headlamps;
     [SerializeField]
     private float headlampMaxIntensity = 3.75f;
     private float targetHeadlampIntensity = 3.75f;
+
+    private int hp = 0;
     
 	void Start () {
         rb = GetComponent<Rigidbody>();
@@ -38,6 +53,34 @@ public class Vehicle : MonoBehaviour {
     public void AddImpulse(float amount)
     {
         impulse = amount;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag.Equals("Parts"))
+        {
+            hp++;
+            Debug.LogFormat("HP: {0}", hp);
+        }
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.impulse.magnitude > damageImpulseFloor &&
+            damageDebounceTimer == 0)
+        {
+            DamageTaken();
+            damageDebounceTimer = damageDebounce;
+        }
+    }
+
+    protected virtual void DamageTaken()
+    {
+        hp--;
+        if (hp <= 0)
+        {
+            Debug.Log("Dead.");
+        }
     }
 
     void Update()
@@ -59,6 +102,8 @@ public class Vehicle : MonoBehaviour {
         {
             l.intensity = Mathf.Lerp(l.intensity, targetHeadlampIntensity, Time.deltaTime * 25);
         }
+
+        damageDebounceTimer = Mathf.Max(damageDebounceTimer - Time.deltaTime, 0);
     }
 
 	void FixedUpdate () {
@@ -69,5 +114,6 @@ public class Vehicle : MonoBehaviour {
             rb.AddRelativeForce(Vector3.forward * impulse, ForceMode.Impulse);
             impulse = 0;
         }
+        rb.drag = drag + hpDrag * hp;
 	}
 }
