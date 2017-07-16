@@ -77,7 +77,7 @@ public class Vehicle : MonoBehaviour {
         if (other.tag.Equals("Lock") &&
             carryingKey)
         {
-            Debug.Log("WINNER");
+            hp = 0;
         }
         if (other.tag.Equals("Road"))
         {

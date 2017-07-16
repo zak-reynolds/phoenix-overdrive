@@ -22,6 +22,8 @@ namespace Assets
                 newSegment.name = "RoadSegment";
                 newSegment.tag = "Road";
                 newSegment.layer = 12;
+                newSegment.transform.rotation.SetEulerRotation(new Vector3(0, newSegment.transform.rotation.eulerAngles.y, 0));
+                newSegment.transform.position = new Vector3(newSegment.transform.position.x, 0, newSegment.transform.position.z);
                 //var bc = newSegment.AddComponent<BoxCollider>();
                 //bc.isTrigger = true;
                 //bc.center = new Vector3(25, 0, 0);
