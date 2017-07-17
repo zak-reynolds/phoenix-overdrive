@@ -29,7 +29,7 @@ namespace Assets.Scripts.EnemyStates
 
             var targetDirection = (target.position + target.right * 2.5f - self.position).normalized;
             Input = new VehicleInput(
-                0.8f,
+                1.1f,
                 Vector3.Dot(self.right, targetDirection) > 0 ? 0.8f : -0.8f);
 
             return null;

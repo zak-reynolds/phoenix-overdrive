@@ -7,6 +7,8 @@ public class VehicleFacade : Facade {
     [SerializeField]
     private ParticleSystem heat;
     protected Vehicle vehicle;
+    [SerializeField]
+    private AudioSource source;
 	
     protected override void Start()
     {
@@ -20,5 +22,6 @@ public class VehicleFacade : Facade {
             if (!vehicle.InBounds() && !heat.isPlaying) heat.Play();
             if (vehicle.InBounds() && heat.isPlaying) heat.Stop();
         }
+        //else if (!source.isPlaying) source.Play();
 	}
 }

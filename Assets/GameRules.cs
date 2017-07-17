@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.VehicleControllers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,11 @@ public class GameRules : MonoBehaviour {
     [SerializeField]
     private PlayerVehicleController playerVehicleController;
 
+    [SerializeField]
+    private Text gameOverText;
+
+    private float time = 0;
+
     void Update () {
         for (int i = 0; i < hpSprites.Count; ++i)
         {
@@ -30,5 +36,13 @@ public class GameRules : MonoBehaviour {
         pBarSprite.color = playerVehicle.IsPheonix() ?
             Color.red :
             Color.white;
-	}
+
+        if (playerVehicle == null)
+            gameOverText.text = String.Format(
+                "YOUR TIME:\n{0}:{1}",
+                Mathf.FloorToInt(time / 60),
+                Mathf.FloorToInt(time) % 60);
+        else
+            time += Time.deltaTime;
+    }
 }

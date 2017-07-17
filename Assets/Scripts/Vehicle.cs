@@ -46,11 +46,28 @@ public class Vehicle : MonoBehaviour {
     private float headlampMaxIntensity = 3.75f;
     private float targetHeadlampIntensity = 3.75f;
 
+    [Header("Sounds")]
+    public AudioClip pickup;
+    public AudioClip flame;
+    public AudioClip sizzle;
+    public AudioClip rev;
+    public AudioClip revEnd;
+    public AudioClip squeal;
+    public AudioClip collide;
+    public AudioClip die;
+    public AudioClip collisionSmall;
+    public AudioClip collisionBig;
+    [SerializeField]
+    private AudioSource sizzleSource;
+    [SerializeField]
+    private AudioSource pheonixSource;
+
     private int hp = 0;
     private bool carryingKey = false;
     
 	void Start () {
         rb = GetComponent<Rigidbody>();
+        sizzleSource = GetComponent<AudioSource>();
 	}
 	
     public void SetInput(VehicleInput input)
@@ -61,6 +78,8 @@ public class Vehicle : MonoBehaviour {
     public void AddImpulse(float amount)
     {
         impulse = amount;
+
+        sizzleSource.PlayOneShot(squeal);
     }
 
     void OnTriggerEnter(Collider other)
@@ -68,11 +87,15 @@ public class Vehicle : MonoBehaviour {
         if (other.tag.Equals("Parts"))
         {
             if (hp <= 5) hp++;
+
+            sizzleSource.PlayOneShot(pickup);
         }
         if (other.tag.Equals("Key") &&
             tag.Equals("Player"))
         {
             carryingKey = true;
+
+            sizzleSource.PlayOneShot(pickup);
         }
         if (other.tag.Equals("Lock") &&
             carryingKey)
@@ -83,6 +106,7 @@ public class Vehicle : MonoBehaviour {
         {
             outOfBoundsTimer = outOfBoundsCooldown;
             inBounds = true;
+            sizzleSource.Stop();
         }
     }
 
@@ -92,6 +116,7 @@ public class Vehicle : MonoBehaviour {
         {
             outOfBoundsTimer = outOfBoundsCooldown;
             inBounds = false;
+            sizzleSource.Play();
         }
     }
 
@@ -107,6 +132,7 @@ public class Vehicle : MonoBehaviour {
         {
             outOfBoundsTimer = outOfBoundsCooldown;
             inBounds = true;
+            sizzleSource.Stop();
         }
     }
 
@@ -117,6 +143,7 @@ public class Vehicle : MonoBehaviour {
         {
             DamageTaken();
             damageDebounceTimer = damageDebounce;
+            sizzleSource.PlayOneShot(col.impulse.magnitude > damageImpulseFloor + 30 ? collisionBig : collisionSmall);
         }
     }
 
@@ -154,6 +181,8 @@ public class Vehicle : MonoBehaviour {
         }
 
         isPheonix = input.IsPheonix;
+        if (isPheonix && !pheonixSource.isPlaying) pheonixSource.Play();
+        if (!isPheonix && pheonixSource.isPlaying) pheonixSource.Stop();
     }
 
 	void FixedUpdate () {
